@@ -8,7 +8,7 @@ class Book(models.Model):
     class Meta:
      app_label = 'api'
 
-class author(models.Model):
+class Author(models.Model):
     name = models.CharField(max_length=100)
     birth_date = models.DateField()
     country = models.CharField(max_length=100)
