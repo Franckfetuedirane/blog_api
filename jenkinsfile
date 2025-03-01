@@ -27,11 +27,14 @@ pipeline {
             steps {
                 script {
                     bat """
-                    docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} python manage.py test
+                    docker-compose up -d db
+                    docker run --network blog_api_default --rm ${DOCKER_IMAGE}:${DOCKER_TAG} python manage.py test
+                    docker-compose down
                     """
                 }
             }
         }
+
 
         stage('Deploy Locally') {
             steps {
@@ -54,5 +57,3 @@ pipeline {
         }
     }
 }
-
-
