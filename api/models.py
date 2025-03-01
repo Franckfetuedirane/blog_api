@@ -5,6 +5,8 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_date = models.DateField()
     # author = models.()
+    class Meta:
+     app_label = 'api'
 
 class author(models.Model):
     name = models.CharField(max_length=100)
