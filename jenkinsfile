@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Franckfetuedirane/DockerProject.git'
+                git branch: 'main', url: 'https://github.com/Franckfetuedirane/blog_api.git'
             }
         }
 
