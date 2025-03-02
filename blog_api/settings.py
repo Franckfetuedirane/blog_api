@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'blog_api',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'blog_api',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
