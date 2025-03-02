@@ -20,12 +20,12 @@
 
 
 from rest_framework import viewsets,filters
-from .models import Book, author
-from .serializers import BookSerializer, authorSerializer
+from .models import Book, Author
+from .serializers import BookSerializer, AuthorSerializer
 
 class AuthorViewSet(viewsets.ModelViewSet):
-    queryset = author.objects.all()
-    serializer_class = authorSerializer
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
     # filter_backends = [filters.SearchFilter]
     # search_fields = ['name', 'birth_date', 'country'] #champ de recherche
     
