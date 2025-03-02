@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   web:
     build: .
@@ -9,8 +10,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
   db:
-    image: postgres:17.4
+    image: postgres:13
     environment:
       POSTGRES_DB: blog_api
       POSTGRES_USER: postgres
