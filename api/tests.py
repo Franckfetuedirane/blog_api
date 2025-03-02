@@ -10,7 +10,7 @@ class ViewSetTests(TestCase):
         self.author = Author.objects.create(
             name="J.K. Rowling",
             birth_date="1965-07-31",
-            nationality="British"
+            country="British"
         )
         self.book = Book.objects.create(
             title="Harry Potter and the Philosopher's Stone",
