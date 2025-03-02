@@ -29,7 +29,7 @@ class ViewSetTests(TestCase):
         data = {
             "name": "George Orwell",
             "birth_date": "1903-06-25",
-            "contry": "British"
+            "country": "British"
         }
         response = self.client.post('/api/author/', data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
