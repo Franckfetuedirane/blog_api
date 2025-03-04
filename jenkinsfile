@@ -4,8 +4,8 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'blog_api-web'
         DOCKER_TAG = 'latest'
-        DOCKER_REGISTRY = 'your-docker-hub-username'
-        DOCKER_CREDENTIALS_ID = 'your-docker-hub-credentials-id'
+        DOCKER_REGISTRY = 'fetue'
+        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
     }
 
     stages {
