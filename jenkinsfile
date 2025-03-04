@@ -6,12 +6,15 @@ pipeline {
         DOCKER_TAG = 'latest'
         DOCKER_REGISTRY = 'fetue'
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
+        GIT_CREDENTIALS_ID = 'github-credentials'  // Ajoutez cette ligne
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/Franckfetuedirane/blog_api.git'
+                script {
+                    git branch: 'master', url: 'https://github.com/Franckfetuedirane/blog_api.git', credentialsId: "${GIT_CREDENTIALS_ID}"
+                }
             }
         }
 
@@ -37,17 +40,17 @@ pipeline {
             }
         }
 
-stage('Push Docker Image') {
-    steps {
-        script {
-            withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                sh 'docker tag blog_api-web:latest $DOCKER_USERNAME/blog_api-web:latest'
-                sh 'docker push $DOCKER_USERNAME/blog_api-web:latest'
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                        sh 'docker tag blog_api-web:latest $DOCKER_USERNAME/blog_api-web:latest'
+                        sh 'docker push $DOCKER_USERNAME/blog_api-web:latest'
+                    }
+                }
             }
         }
-    }
-}
 
         stage('Deploy Locally') {
             steps {
