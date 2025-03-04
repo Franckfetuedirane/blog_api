@@ -4,36 +4,8 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'blog_api-web'
         DOCKER_TAG = 'latest'
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'master', url: 'https://github.com/Franckfetuedirane/blog_api.git'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    bat """
-                    docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
-                    """
-                }
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                script {
-                    bat """
-                    docker-compose up -d db
-                    docker run --network blog_api_default --rm ${DOCKER_IMAGE}:$pipeline {
-    agent any
-
-    environment {
-        DOCKER_IMAGE = 'blog_api-web'
-        DOCKER_TAG = 'latest'
+        DOCKER_REGISTRY = 'your-docker-hub-username'
+        DOCKER_CREDENTIALS_ID = 'your-docker-hub-credentials-id'
     }
 
     stages {
@@ -65,33 +37,19 @@ pipeline {
             }
         }
 
-        stage('Deploy Locally') {
+        stage('Push Docker Image') {
             steps {
                 script {
-                    bat """
-                    docker-compose down || exit 0
-                    docker-compose up -d
-                    """
+                    withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        bat """
+                        docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%
+                        docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
+                        """
+                    }
                 }
             }
         }
-    }
-
-    post {
-        success {
-            echo 'Pipeline terminé avec succès !'
-        }
-        failure {
-            echo 'Pipeline échoué.'
-        }
-    }
-}{DOCKER_TAG} python manage.py test
-                    docker-compose down
-                    """
-                }
-            }
-        }
-
 
         stage('Deploy Locally') {
             steps {
