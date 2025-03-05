@@ -14,5 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Exposer le port sur lequel l'application va s'exécuter
 EXPOSE 8000
 
+# Exécuter Flake8 pour vérifier les conventions PEP8
+RUN flake8 .
 # Définir la commande par défaut pour exécuter l'application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
