@@ -1,0 +1,13 @@
+comendes pour la question 4
+
+# Se connecter à Docker Hub
+docker login
+
+# Construire l'image
+docker build -t fetue/blog_api-web:tag .
+
+# Pousser l'image
+docker push fetue/blog_api-web:tag
+
+
+# docker compose -f 'docker-compose.yml' up -d --build 
