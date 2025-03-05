@@ -10,4 +10,5 @@ docker build -t fetue/blog_api-web:tag .
 docker push fetue/blog_api-web:tag
 
 
+#Construire et démarrer les services définis dans docker-compose.yml :
 # docker compose -f 'docker-compose.yml' up -d --build 
